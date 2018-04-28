@@ -15,6 +15,12 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  findOne: function(req, res) {
+    db.Businesses
+      .findOne(req.query)
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
   create: function(req, res) {
     // console.log('Correct API function');
     db.Businesses
@@ -34,5 +40,23 @@ module.exports = {
       .then(dbModel => dbModel.remove())
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
+  },
+  login: function(req, res){
+    // console.log(req.body)
+    db.Businesses
+    .findOne({email: req.body.email})
+    .then(function(dbBusinesses){
+      console.log("body: " + req.body);
+      console.log(dbBusinesses);
+      if(!dbBusinesses){
+        res.json({message: "Incorrect Email!"})
+      } else if (!dbBusinesses.comparePassword(req.body.password)){
+        res.json({message: "Incorrect Password!"})
+      } else {
+        // console.log(res.body)
+        //  res.json({id: req.body._id });
+        res.json(dbBusinesses)
+      }
+    })
   }
 };

@@ -1,9 +1,16 @@
 import React, { Component } from "react";
 import { FormGroup, FormControl, Button, Form, Navbar } from "react-bootstrap";
+import API from "../../utils/API";
+import { Redirect } from 'react-router';
+
+
 
 class NavSignInForm extends Component {
   // Setting the component's initial state
   state = {
+    business: {},
+    redirect: false,
+    _id: "",
     email: "",
     password: ""
   };
@@ -12,7 +19,7 @@ class NavSignInForm extends Component {
     // Getting the value and name of the input which triggered the change
     let value = event.target.value;
     const name = event.target.name;
-
+    console.log("here");
     if (name === "password") {
       value = value.substring(0, 15);
     }
@@ -25,27 +32,32 @@ class NavSignInForm extends Component {
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
-    if (!this.state.firstName || !this.state.lastName) {
-      alert("Fill out your first and last name please!");
-    } else if (this.state.password.length < 6) {
-      alert(
-        `Choose a more secure password ${this.state.firstName} ${this.state
-          .lastName}`
-      );
-    } else {
-      alert(`Hello ${this.state.firstName} ${this.state.lastName}`);
-    }
+    console.log("Email:" + this.state.email)
 
-    this.setState({
-      firstName: "",
-      lastName: "",
-      password: ""
-    });
+    API.postBusinessLogin({
+      email: this.state.email,
+      password: this.state.password
+    })
+      .then(res =>
+        // console.log(res.data));
+        this.setState({ business: res.data, redirect: true }))
+    // loadBusiness();
   };
 
+  // loadBusiness = () => {
+  //   API.getBusiness()
+  //     .then(res =>
+  //       this.setState({ business: res.data, redirect: true, email: "", password: "" }))
+  // };
+
   render() {
-    // Notice how each input has a `value`, `name`, and `onChange` prop
-    return (
+    const { redirect } = this.state;
+
+      if (redirect) {
+          return <Redirect to={'/business-owner/' + this.state.business._id}/>;
+      }
+
+      return (
         <Navbar inverse collapseOnSelect>
         <Navbar.Header>
           <Navbar.Brand>
@@ -55,16 +67,19 @@ class NavSignInForm extends Component {
         </Navbar.Header>
             <Navbar.Collapse>
                 <Navbar.Form pullRight>
-                    <Form inline>
+                    <Form 
+                    inline
+                    onChange={this.handleInputChange}                     
+                    onSubmit={this.handleFormSubmit}>
                         <FormGroup controlId="formInlineEmail">
                             <FormControl 
-                            name = "email"
-                            type="text" 
+                            name ="email"
+                            type="email" 
                             placeholder="Email" />
                         </FormGroup>{' '}
                         <FormGroup controlId="formInlinePassword">
                             <FormControl 
-                            name = "password"
+                            name ="password"
                             type="password" 
                             placeholder="Password" />
                         </FormGroup>{' '}

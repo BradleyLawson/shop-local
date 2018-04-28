@@ -89,14 +89,10 @@ businessSchema.pre('save', function(next) {
       });
     });
 
-businessSchema.methods.comparePassword = function(candidatePassword) {
- return bcrypt.compareSync(candidatePassword, this.password);
-      // if (err) return cb(err);
-      // cb(null, isMatch);
-      // console.log(isMatch);
-      // if (err) return (err);
-      // return (isMatch);
-  // });
-}  
+businessSchema.methods.comparePassword = function(candidatePassword, cb) {
+  bcrypt.compare(candidatePassword, this.password, function(err, isMatch) {
+      if (err) return cb(err);
+      cb(null, isMatch);
+  });
 
-module.exports = mongoose.model("Businesses", businessSchema);
+  module.exports = mongoose.model("Businesses", businessSchem);

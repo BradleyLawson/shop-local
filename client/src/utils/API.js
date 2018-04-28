@@ -5,6 +5,11 @@ export default {
   getBusinesses: function() {
     return axios.get("/api/businesses");
   },
+  // Gets business through login
+  postBusinessLogin: function(loginCredentials) {
+    console.log(loginCredentials);
+    return axios.post("/api/businesses/login", loginCredentials);
+  },
   // Gets the business with the given id
   getBusiness: function(id) {
     return axios.get("/api/businesses/" + id);
