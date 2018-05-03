@@ -3,6 +3,12 @@ const db = require("../models");
 // Defining methods for the BusinesssController
 module.exports = {
   findAll: function(req, res) {
+    console.log("line 6correct API function")
+    console.log("line 7" + req.body)
+    console.log("line 8" + req.body.businessZip)
+    console.log("line 10" + req.body.businessCategory)
+    console.log("line 11" + res.body)
+    console.log("line 12" + req.query)
     db.Businesses
       .find(req.query)
       // .sort({ date: -1 })
@@ -12,6 +18,7 @@ module.exports = {
   findById: function(req, res) {
     db.Businesses
       .findById(req.params.id)
+      .populate('blogPosts')
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
@@ -41,12 +48,22 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  search: function(req, res){
+    console.log("line 46" + req.body)
+    console.log("line 47" + req.body.businessZip)
+    db.Businesses
+    .find(req.query)
+    .then(function(dbBusinesses){
+      console.log("line 57" + dbBusinesses);
+      res.json(dbBusinesses);
+      res.send(dbBusiness);
+    })
+  }, 
   login: function(req, res){
     // console.log(req.body)
     db.Businesses
     .findOne({email: req.body.email})
     .then(function(dbBusinesses){
-      console.log("body: " + req.body);
       console.log(dbBusinesses);
       if(!dbBusinesses){
         res.json({message: "Incorrect Email!"})
@@ -58,5 +75,14 @@ module.exports = {
         res.json(dbBusinesses)
       }
     })
+  },
+  searchForBusinesses: function(req, res) {
+    console.log(req.body)
+    db.Businesses
+      .find({businessZip: req.body.businessZip, businessCategory: req.body.businessCategory})
+      .then(dbModel => {
+        console.log(dbModel)
+        res.json(dbModel)})
+      .catch(err => res.status(422).json(err));
   }
-};
+}

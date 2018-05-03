@@ -16,11 +16,15 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
-    console.log('Correct API function');
-    // console.log(req.body);
     db.BlogPost
       .create(req.body)
-      .then(dbModel => res.json(dbModel))
+      .then(function(dbBlogPost){
+        return db.Businesses.findOneAndUpdate({_id: req.body.busId}, { $push: {blogPosts: dbBlogPost._id}}, {new: true});
+      })
+      .then(function(dbBusinesses){
+        console.log(res.body)
+        res.json(dbBusinesses);
+      })
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {

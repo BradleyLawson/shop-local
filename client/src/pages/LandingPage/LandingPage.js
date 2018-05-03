@@ -4,7 +4,7 @@ import { Row, Col, Grid } from 'react-bootstrap';
 import SignUpForm from "../../components/SignUpForm"
 import "./LandingPage.css"
 import { DefaultPlayer as Video } from 'react-html5video';
-import SearchForm from "../../components/SearchForm/SearchForm";
+import { Link } from "react-router-dom";
 
 
 
@@ -19,7 +19,7 @@ const LandingPage = () => (
             className="video-container filter fillWidth"
         >
           <source src="./coffeeshop.mp4" type="video/mp4" />
-          <track label="English" kind="subtitles" srcLang="en" src="http://source.vtt" default />
+          {/* <track label="English" kind="subtitles" srcLang="en" src="http://source.vtt" default /> */}
         </Video>
         <NavSignInForm />
         <Grid fluid>
@@ -38,14 +38,14 @@ const LandingPage = () => (
                     <h3><i className="fas fa-address-book"></i>Collaborate and Meet New People</h3>
                   </div>
                   <h3> Search Today </h3>
-                  <SearchForm />
+                  <Link to={"/search-results"}>Find A Local Business</Link>
                 </div>
             </Col>
             <Col md={6}>
               <div className= "signUpHeadline">
                 <h1>Reach Your Community </h1>
               </div>
-              {/* SIGN UP FROM COMPONENT */}
+              {/* SIGN UP FORM COMPONENT */}
                 <SignUpForm />
             </Col>
           </Row>

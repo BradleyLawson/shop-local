@@ -14,9 +14,10 @@ const App = () => (
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route exact path="/search-results" component={SearchResults} />
+        {/* <Route path="/search-results" component={SearchResults} /> */}
         <Route exact path="/business-public/:id" component={BusinessPublic} />
         <Route exact path="/business-owner/:id" component={BusinessOwner} />
-        <Route exact path="/search-results/:id" component={SearchResults} />
+        {/* <Route exact path="/search-results/:id" component={SearchResults} /> */}
         <Route component={NoMatch} />
       </Switch>
     </div>

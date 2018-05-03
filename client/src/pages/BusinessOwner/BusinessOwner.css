@@ -1,24 +1,18 @@
-body{
-    background-color: #F0FFFF;
+
+.input-forms{
+    border: 1px solid #36454f;
+    box-shadow: 1px 1px 1px #36454f;
 }
-.form-control{
-    border: 1px solid blue;
-    box-shadow: 1px 1px 1px black;
+.input-forms:hover{
+    box-shadow: 2px 2px 2px #36454f;    
 }
-.form-control:hover{
-    box-shadow: 2px 2px 2px black;    
-}
-.btn{
+/* #owner-buttons{
     box-shadow: 1px 1px 1px black;    
-}
+} */
 .btn:hover{
     box-shadow: 2px 2px 2px black;
     text-decoration: underline;
 }
-h3{
-    text-shadow: 1px 1px 1px black;
-    text-decoration: underline;
-}
-h1{
-    text-shadow: 1px 1px 1px black;   
+.font-style{
+    color: #184a73;
 }

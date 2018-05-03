@@ -48,16 +48,17 @@ const businessSchema = new Schema({
     ]
   },
   tagline: String,
-  backgroundImage: { data: Buffer, contentType: String },
-  profileImage: { data: Buffer, contentType: String },
+  backgroundImage: { type: String },
+  profileImage: {
+      type: String
+    },
   aboutUs: String,
   blogPosts: [
     {
-      image: Buffer,
-      title: String,
-      body: String
+      type: Schema.Types.ObjectId,
+      ref: "BlogPost"
     }
-  ],
+],
   reviews: [],
   ratings: [],
   facebookLink: String,
@@ -91,12 +92,6 @@ businessSchema.pre('save', function(next) {
 
 businessSchema.methods.comparePassword = function(candidatePassword) {
  return bcrypt.compareSync(candidatePassword, this.password);
-      // if (err) return cb(err);
-      // cb(null, isMatch);
-      // console.log(isMatch);
-      // if (err) return (err);
-      // return (isMatch);
-  // });
 }  
 
 module.exports = mongoose.model("Businesses", businessSchema);

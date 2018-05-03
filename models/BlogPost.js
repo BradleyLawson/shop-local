@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const blogPostSchema = new Schema({
+const BlogPostSchema = new Schema({
     title: String,
-    body: String,
-    image: Buffer
+    body: String
 });
 
 
-const BlogPost = mongoose.model("BlogPost", blogPostSchema);    
+var BlogPost = mongoose.model("BlogPost", BlogPostSchema);    
 module.exports = BlogPost;

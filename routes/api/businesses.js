@@ -10,7 +10,13 @@ router.route("/")
 // login routes
 router
   .route("/login")
-  .post(businessController.login);  
+  .post(businessController.login); 
+
+router
+  .route("/search")
+  .post(businessController.searchForBusinesses)
+  .get(businessController.searchForBusinesses); 
+    
 
 // Matches with "/api/business/:id"
 router

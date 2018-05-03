@@ -1,15 +1,7 @@
 import React, { Component } from "react";
-import { Grid, Row, Col, Well, PageHeader, Form, FormGroup, FormControl, Button, ControlLabel } from 'react-bootstrap';
+import { Grid, Row, Col, PageHeader, Form, FormGroup, FormControl, Button, ControlLabel } from 'react-bootstrap';
 import GlobalNavbar from "../../components/GlobalNavbar";
 import { Link } from "react-router-dom";
-// import Header from "../../components/Header";
-// import AboutUs from "../../components/AboutUs";
-// import ReviewCard from "../../components/ReviewCard";
-// import BlogPosts from "../../components/BlogPosts";
-// import AboutUsForm from "../../components/AboutUsForm";
-// import MapContainer from "../../components/MapContainer";
-// import {FacebookBtn, TwitterBtn, LinkedInBtn, InstagramBtn} from "../../components/SocialMediaButtons";
-// import SocialMediaForm from "../../components/SocialMediaForm/SocialMediaForm";
 import "./BusinessOwner.css"; 
 import API from "../../utils/API";
 
@@ -21,6 +13,7 @@ class BusinessOwner extends Component {
     
         this.state = {
             business: {},
+            blogPost: {},
             tagline: "",
             phoneNumber: ""
         };
@@ -36,7 +29,9 @@ class BusinessOwner extends Component {
             this.setState({ business: res.data }))
       };
 
-
+      resetForm = () => {
+        this.refs.headerForm.refs.reset();
+      };
 
       handleInputChange = event => {
         // Getting the value and name of the input which triggered the change
@@ -55,13 +50,15 @@ class BusinessOwner extends Component {
         console.log("Working");
          API.updateBusiness(this.props.match.params.id,{
              tagline: this.state.tagline,
-             phoneNumber: this.state.phoneNumber
+             phoneNumber: this.state.phoneNumber,
+             backgroundImage: this.state.backgroundImage
          })
             .then(res =>
           this.setState({
             business: res.data,
             tagline: "",
-            phoneNumber: ""
+            phoneNumber: "",
+            backgroundImage: ""
         }));
       };
 
@@ -70,37 +67,29 @@ class BusinessOwner extends Component {
         event.preventDefault();
         console.log("Working");
          API.updateBusiness(this.props.match.params.id,{
-             profileImage: this.state.profileImage,
-             aboutUs: this.state.aboutUs
+             aboutUs: this.state.aboutUs,
+             profileImage: this.state.profileImage
          })
             .then(res =>
           this.setState({
             business: res.data,
-            profileImage: "",
-            aboutUs: ""
+            aboutUs: "",
+            profileImage: ""
         }));
       };
 
     handleBlogFormSubmit = event => {
+        let busId = this.state.business._id
     // Preventing the default behavior of the form submit (which is to refresh the page)
         event.preventDefault();
-            API.updateBusiness(this.props.match.params.id,{
-                blogPosts: [
-                    {
-                        image: this.state.image,
-                        title: this.state.title,
-                        body: this.state.body
-                    }
-                ]
+            API.saveBlogPost({
+            busId: busId,
+            title: this.state.title,
+            body: this.state.body
             }).then(res => this.setState({
-            business: res.data,
-            blogPosts: [
-                {
-                    image: "",
-                    title: "",
-                    body: ""
-                }
-            ]            
+            blogPost: res.data,
+            title: "",
+            body: "" 
             }));
     };
 
@@ -127,17 +116,19 @@ class BusinessOwner extends Component {
         return (
             <div>
                 <GlobalNavbar />
-                <Grid fluid>        
+                <div style={{background: "#bdd7e2", marginTop: -20}}>                        
+                <Grid fluid>  
                     <PageHeader>
                         <Row>
                             <Col md={6}>
-                            <h1>{this.state.business.businessName}</h1>
-                            <h4>{this.state.business.businessAddress}</h4> 
-                            <h4>{this.state.business.phoneNumber}</h4>
-                            <h5>Welcome {this.state.business.firstName} {this.state.business.lastName}</h5>
+                            <h1 className="font-style">{this.state.business.businessName}</h1>
+                            <h4 className="font-style">{this.state.business.businessAddress}</h4> 
+                            <h4 className="font-style">{this.state.business.phoneNumber}</h4>
+                            <h5 className="font-style">Welcome {this.state.business.firstName} {this.state.business.lastName}</h5>
                             </Col>  
                             <Col md={6}>
                                 <Form 
+                                ref="headerForm"
                                 inline
                                 onSubmit={this.handleHeaderFormSubmit.bind(this)}
                                 >
@@ -148,6 +139,7 @@ class BusinessOwner extends Component {
                                         placeholder="Add a Tagline" 
                                         value={this.state.value}
                                         onChange={this.handleInputChange}
+                                        className="input-forms"                                        
                                         />
                                     </FormGroup>{' '}
                                     <FormGroup controlId="formInlinePhoneNumber">
@@ -157,41 +149,61 @@ class BusinessOwner extends Component {
                                         placeholder="555-555-5555"
                                         value={this.state.value}
                                         onChange={this.handleInputChange}
+                                        className="input-forms"
                                         />
                                     </FormGroup>{' '}
+                                    <FormGroup controlId="formHorizontalprofileImage">
+                                        
+                                            <FormControl 
+                                            name="profileImage"
+                                            type="text" 
+                                            placeholder="Upload your Image"
+                                            value={this.state.value}
+                                            onChange={this.handleInputChange}
+                                            className="input-forms"                                            
+                                            />
+                                    </FormGroup>
                                     <Button 
                                     type="submit"
-                                    bsStyle="primary"
+                                    style={{background: "#c3423d", color: "white"}}
                                     >Upload</Button>
                                 </Form>
-                                <Link to={'/business-public/' + this.state.business._id}>
-                                    <strong>
-                                        Check Out Your Page
-                                    </strong>
-                                </Link>
+                                    <Row>
+                                        <Col md={12} style={{marginTop: 15}}>
+                                            <Link to={'/business-public/' + this.state.business._id}>
+                                                <h4 className="font-style">
+                                                    Check Out Your Page
+                                                </h4>
+                                            </Link>
+                                        </Col>
+                                    </Row>
                             </Col>
                         </Row>     
                     </PageHeader>
                 </Grid>
+                </div>                
                 {/* About You Section */}
                 <Grid fluid>
                     <Row>
                         <Col md={12}>
-                            <h3>About You</h3>
+                            <h3 className="font-style"><strong>About You</strong></h3>
                             <Form 
                                 horizontal 
                                 className = "aboutUsForm"
+                                action="/upload"
+                                method="POST"
+                                encType="multipart/form-data"
                                 onSubmit={this.handleAboutFormSubmit.bind(this)}>
                                     <FormGroup controlId="formHorizontalprofileImage">
                                         <Col md={3}>
                                         <ControlLabel>Upload Your Profile Picture</ControlLabel>
                                             <FormControl 
-                                            label="File"
                                             name="profileImage"
-                                            type="file" 
+                                            type="text" 
                                             placeholder="Upload your Image"
                                             value={this.state.value}
                                             onChange={this.handleInputChange}
+                                            className="input-forms"                                            
                                             />
                                         </Col>
                                     </FormGroup>
@@ -204,14 +216,15 @@ class BusinessOwner extends Component {
                                             placeholder="Tell the World who you are"
                                             value={this.state.value}
                                             onChange={this.handleInputChange}
+                                            className="input-forms"                                            
                                             />
                                         </Col>
                                     </FormGroup>
                                     <FormGroup>
                                         <Col smOffset={0} sm={12}>
-                                            <Button 
+                                            <Button
                                             type="submit"
-                                            bsStyle="primary"
+                                            style={{background: "#c3423d", color: "white"}}
                                             >Upload</Button>
                                         </Col>
                                     </FormGroup>
@@ -225,12 +238,12 @@ class BusinessOwner extends Component {
                         <Col md={9}>
                             <Row>
                                 <Col md={12}>
-                                    <h3>Make a Post</h3>
+                                    <h3 className="font-style"><strong>Make a Post</strong></h3>
                                     <Form 
                                     horizontal 
                                     className = "blogPostForm"
                                     onSubmit={this.handleBlogFormSubmit.bind(this)}>
-                                        <FormGroup controlId="formHorizontalblogPostImage">
+                                        {/* <FormGroup controlId="formHorizontalblogPostImage">
                                             <Col md={3}>
                                                 <ControlLabel>Upload an Image for your Post</ControlLabel>                                            
                                                 <FormControl 
@@ -239,9 +252,10 @@ class BusinessOwner extends Component {
                                                 placeholder="Add an Image for your Post"
                                                 value={this.state.value}
                                                 onChange={this.handleInputChange}
+                                                className="input-forms"                                                
                                                 />
                                             </Col>
-                                        </FormGroup>
+                                        </FormGroup> */}
                                         <FormGroup controlId="formHorizontalblogPostTitle">
                                             <Col md={12}>
                                                 <FormControl 
@@ -250,6 +264,7 @@ class BusinessOwner extends Component {
                                                 placeholder="Title for Post"
                                                 value={this.state.value}
                                                 onChange={this.handleInputChange}
+                                            className="input-forms"                                                
                                                 />
                                             </Col>
                                         </FormGroup>
@@ -262,6 +277,7 @@ class BusinessOwner extends Component {
                                                 placeholder="Share your thoughts..."
                                                 value={this.state.value}
                                                 onChange={this.handleInputChange}
+                                                className="input-forms"                                                
                                                 />
                                             </Col>
                                         </FormGroup>
@@ -269,7 +285,7 @@ class BusinessOwner extends Component {
                                             <Col smOffset={0} sm={12}>
                                                 <Button 
                                                 type="submit"
-                                                bsStyle="primary"
+                                                style={{background: "#c3423d", color: "white"}}
                                                 >Post</Button>
                                             </Col>
                                         </FormGroup>
@@ -280,7 +296,7 @@ class BusinessOwner extends Component {
                             </Row>
                         </Col>
                         <Col md={3}>
-                            <h3>Link to Social Media</h3>  
+                            <h3 className="font-style"><strong>Link Your Social Media</strong></h3>  
                             {/*Social Media Form Component  */}
                             {/* <SocialMediaForm /> */}
                             <Form 
@@ -295,6 +311,7 @@ class BusinessOwner extends Component {
                                             placeholder="Connect Your Facebook"
                                             value={this.state.value}
                                             onChange={this.handleInputChange}
+                                            className="input-forms"                                            
                                             />
                                         </Col>
                                     </FormGroup>
@@ -306,6 +323,7 @@ class BusinessOwner extends Component {
                                             placeholder="Connect Your Twitter"
                                             value={this.state.value}
                                             onChange={this.handleInputChange}
+                                            className="input-forms"                                            
                                             />
                                         </Col>
                                     </FormGroup>
@@ -317,6 +335,7 @@ class BusinessOwner extends Component {
                                             placeholder="Connect Your LinkedIn"
                                             value={this.state.value}
                                             onChange={this.handleInputChange}
+                                            className="input-forms"                                            
                                             />
                                         </Col>
                                     </FormGroup>
@@ -328,6 +347,7 @@ class BusinessOwner extends Component {
                                             placeholder="Connect Your Instagram"
                                             value={this.state.value}
                                             onChange={this.handleInputChange}
+                                            className="input-forms"                                             
                                             />
                                         </Col>
                                     </FormGroup>
@@ -335,7 +355,7 @@ class BusinessOwner extends Component {
                                         <Col smOffset={0} sm={12}>
                                             <Button 
                                             type="submit"
-                                            bsStyle="primary"
+                                            style={{background: "#c3423d", color: "white"}}
                                             >Upload</Button>
                                         </Col>
                                     </FormGroup>

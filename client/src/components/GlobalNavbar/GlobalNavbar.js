@@ -2,20 +2,20 @@ import React from "react";
 import { Nav, NavItem, Navbar } from "react-bootstrap";
 
 const GlobalNavbar = () => (
-    <Navbar inverse collapseOnSelect>
+    <Navbar inverse collapseOnSelect style={{background: "#343f4d"}}>
         <Navbar.Header>
             <Navbar.Brand>
-                <a href="#brand">Lokl</a>
+                <a href="#brand" style={{color: "white"}}>Lokl</a>
             </Navbar.Brand>
             <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
             <Nav pullRight>
                 <NavItem eventKey={1} href="#">
-                    Home
+                    <span style={{color: "white"}}>Home</span>
                 </NavItem>
                 <NavItem eventKey={2} href="#">
-                    About
+                    <span style={{color: "white"}}>About</span>
                 </NavItem>
             </Nav>
         </Navbar.Collapse>
