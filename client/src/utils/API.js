@@ -54,24 +54,24 @@ export default {
   updateBlogPost: function(id, updatedBlogData) {
     return axios.put("/api/blogPosts/"+id, updatedBlogData);
   },
-  //profileImage functions
+  //review functions
   // Gets all Blog Posts
-  getProfileImages: function() {
-    return axios.get("/api/profileImage");
+  getReviews: function() {
+    return axios.get("/api/reviews");
   },
   // Gets the blog Post with the given id
-  getProfileImage: function(id) {
-    return axios.get("/api/profileImage/" + id);
+  getReview: function(id) {
+    return axios.get("/api/reviews/" + id);
   },
   // Deletes the blog Post with the given id
-  deleteProfileImage: function(id) {
-    return axios.delete("/api/profileImage/" + id);
+  deleteReview: function(id) {
+    return axios.delete("/api/reviews/" + id);
   },
   // Saves a blog Post to the database
-  saveProfileImage: function(profileImage) {
-    return axios.post("/api/profileImage", profileImage);
+  saveReview: function(review) {
+    return axios.post("/api/reviews", review);
   },
-  updateProfileImage: function(id, updatedProfileImage) {
-    return axios.put("/api/profileImage/"+id, updatedProfileImage);
+  updateReview: function(id, updatedReview) {
+    return axios.put("/api/reviews/"+id, updatedReview);
   }
 };

@@ -25,6 +25,8 @@ const businessSchema = new Schema({
     required: "Please Choose a Category for Your Business!"
   },
   businessAddress: { type: String },
+  businessCity: { type: String },
+  businessState: { type: String },
   businessZip: {
     type: String,
     trim: true,
@@ -48,7 +50,7 @@ const businessSchema = new Schema({
     ]
   },
   tagline: String,
-  backgroundImage: { type: String },
+  backgroundImage: String,
   profileImage: {
       type: String
     },
@@ -59,7 +61,12 @@ const businessSchema = new Schema({
       ref: "BlogPost"
     }
 ],
-  reviews: [],
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review"
+    }
+  ],
   ratings: [],
   facebookLink: String,
   twitterLink: String,

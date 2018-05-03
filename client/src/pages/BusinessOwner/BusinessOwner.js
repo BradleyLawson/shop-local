@@ -29,9 +29,9 @@ class BusinessOwner extends Component {
             this.setState({ business: res.data }))
       };
 
-      resetForm = () => {
-        this.refs.headerForm.refs.reset();
-      };
+      clearInput() {
+        this.setState({ value: "" });
+      }
 
       handleInputChange = event => {
         // Getting the value and name of the input which triggered the change
@@ -60,6 +60,7 @@ class BusinessOwner extends Component {
             phoneNumber: "",
             backgroundImage: ""
         }));
+        this.clearInput();        
       };
 
       handleAboutFormSubmit = event => {
@@ -76,6 +77,7 @@ class BusinessOwner extends Component {
             aboutUs: "",
             profileImage: ""
         }));
+        this.clearInput();        
       };
 
     handleBlogFormSubmit = event => {
@@ -91,6 +93,7 @@ class BusinessOwner extends Component {
             title: "",
             body: "" 
             }));
+            this.clearInput();
     };
 
     handleSocialMediaFormSubmit = event => {
@@ -108,6 +111,7 @@ class BusinessOwner extends Component {
                     linkedInLink: "",
                     instagramLink: ""           
                 }));
+            this.clearInput();                
         };
 
       
@@ -123,6 +127,11 @@ class BusinessOwner extends Component {
                             <Col md={6}>
                             <h1 className="font-style">{this.state.business.businessName}</h1>
                             <h4 className="font-style">{this.state.business.businessAddress}</h4> 
+                                <Row>
+                                    <Col md={12}>
+                                        <h4 className="font-style">{this.state.business.businessCity}, {this.state.business.businessState}. {this.state.business.businessZip}</h4>                                         
+                                    </Col>                                    
+                                </Row>
                             <h4 className="font-style">{this.state.business.phoneNumber}</h4>
                             <h5 className="font-style">Welcome {this.state.business.firstName} {this.state.business.lastName}</h5>
                             </Col>  

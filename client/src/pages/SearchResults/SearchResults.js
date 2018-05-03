@@ -34,6 +34,10 @@ class SearchResults extends Component{
     });
   };
 
+  clearInput() {
+    this.setState({ value: "" });
+  }
+
   handleFormSubmit = event => {
     // Preventing the default behavior of the form submit (which is to refresh the page)
     event.preventDefault();
@@ -48,7 +52,7 @@ class SearchResults extends Component{
      businessZip: "",
      businessCategory: ""
  }));
-
+this.clearInput();
 
   };
 
@@ -83,10 +87,18 @@ class SearchResults extends Component{
                       >
                           <option value="" selected disabled>Business Category</option>                    
                           <option value="Furniture">Furniture</option>
+                          <option value="Non-Profit">Non-Profit</option>
+                          <option value="Events">Events</option>
+                          <option value="Retail">Retail</option>
+                          <option value="Technology">Technology</option>
+                          <option value="Education">Education</option>
+                          <option value="Dealership">Dealership</option>
+                          <option value="Independent Contractor">Independent Contractor</option>
                           <option value="Art">Art</option>
                           <option value="Photography">Photography</option>
-                          <option value="Restaurant">Restaurant</option>
+                          <option value="Food & Drink">Food & Drink</option>
                           <option value="Local Farm">Local Farm</option>
+                          <option value="Custom Fabrication">Custom Fabrication</option>
                           <option value="Service">Service</option>
                       </FormControl>
                 </FormGroup>{' '}

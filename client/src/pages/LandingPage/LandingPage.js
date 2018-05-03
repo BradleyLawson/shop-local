@@ -26,7 +26,7 @@ const LandingPage = () => (
           <Row>
             <Col md={6}>
               <div className = "searchHeadline">
-                <h1>Engage Loklly</h1>
+                <h1>Engage Locally</h1>
               </div>
                 <div className = "searchDetails">
                   <div>
@@ -34,12 +34,15 @@ const LandingPage = () => (
                     <h3><i className="fas fa-hands-helping"></i>Connect With Your Community</h3>
                     <h3><i className="fas fa-cart-arrow-down"></i>Support Your Local Economy</h3>
                     <h3><i className="fas fa-tag"></i>Do Business With Your Neighbor</h3>
-                    <h3><i className="fas fa-calendar-alt"></i>Locate Events, Sales, and Promotions Near You</h3>
+                    <h3><i className="fas fa-calendar-alt"></i>Locate Local Events, Sales, and Promotions</h3>
                     <h3><i className="fas fa-address-book"></i>Collaborate and Meet New People</h3>
                   </div>
-                  <h3> Search Today </h3>
-                  <Link to={"/search-results"}>Find A Local Business</Link>
-                </div>
+                 
+                  <div style={{marginTop: 40}}>
+                    <h3> Search Today </h3>  
+                    <Link to={"/search-results"}><i class="fas fa-arrow-circle-right fa-3x"></i></Link>  
+                  </div>
+                  </div> 
             </Col>
             <Col md={6}>
               <div className= "signUpHeadline">

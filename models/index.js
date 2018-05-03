@@ -1,4 +1,5 @@
 module.exports = {
   Businesses: require("./Business"),
-  BlogPost: require("./BlogPost")
+  BlogPost: require("./BlogPost"),
+  Review: require("./Review")
 };
