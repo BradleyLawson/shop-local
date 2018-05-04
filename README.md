@@ -1,42 +1,19 @@
-# Create React Express App
+# Shop-Local
 
-## About This Boilerplate
+Shop-Local's purpose is to bring small local businesses and business owners together with consumers who want to support their local economy. As of now, this is a work in progress. More features are coming soon!
 
-This setup allows for a Node/Express/React app which can be easily deployed to Heroku.
+## Built With   
 
-The front-end React app will auto-reload as it's updated via webpack dev server, and the backend Express app will auto-reload independently with nodemon.
+* [Node.js](https://nodejs.org/en/) with [Express](https://expressjs.com/) - Backend
+* [Mongodb](https://www.mongodb.com/) with [Mongoose](http://mongoosejs.com/) - Database
+* [Reactjs](https://reactjs.org/) using [React-Bootstrap](https://react-bootstrap.github.io/) -Frontend
 
-## Starting the app locally
 
-Start by installing front and backend dependencies. While in this directory, run the following commands:
 
-```
-yarn install
-cd client
-yarn install
-cd ..
-``
+## Check It Out
 
-After both installations complete, run the following command in your terminal:
+* [Deployed On Heroku](https://obscure-woodland-15029.herokuapp.com/)
 
-```
-yarn start
-```
+## Author
 
-That's it, your app should be running on <http://localhost:3000>. The Express server should intercept any AJAX requests from the client.
-
-## Deployment (Heroku)
-
-After confirming that you have an up to date git repository and a Heroku app created, complete the following:
-
-1. Build the React app for production by running the following command:
-
-```
-yarn build
-```
-
-2. Add and commit all changes to git
-
-3. Push to Heroku
-
-If all previous steps were followed correctly, your application should be deployed to Heroku!
+* **Brad Lawson** - [BradleyLawson](https://github.com/BradleyLawson)
